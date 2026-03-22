@@ -447,7 +447,7 @@ const App = () => {
       )}
 
       <footer className="py-24 px-6 bg-black border-t border-white/5 text-center">
-        <p className="text-[10px] text-[#B5A995] uppercase tracking-[0.8em] font-black italic">© 2024 Sebastian Kaleta</p>
+        <p className="text-[10px] text-[#B5A995] uppercase tracking-[0.8em] font-black italic">© 2026 Sebastian Kaleta</p>
       </footer>
 
       <style dangerouslySetInnerHTML={{ __html: `
