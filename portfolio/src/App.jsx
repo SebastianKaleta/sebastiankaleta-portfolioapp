@@ -18,8 +18,6 @@ const IconCheck = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="no
 const IconInstagram = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>;
 const IconLinkedin = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>;
 const IconBehance = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 12c2.1 0 3-1 3-2.5S11.1 7 9 7H5v5h4zM9 18c2.4 0 3.5-1.2 3.5-3s-1.1-3-3.5-3H5v6h4zM15 10h5v1h-5zM15 12c0 2.5 5 2.5 5 0"></path></svg>;
-const IconX = () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>;
-
 
 const ProjectCard = ({ project, onClick }) => (
   <div className="group cursor-pointer" onClick={onClick}>
@@ -45,8 +43,7 @@ const App = () => {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isAgreed, setIsAgreed] = useState(false);
-  const [showPrivacy, setShowPrivacy] = useState(false); // Nowy stan dla polityki
-  const [isAgreed, setIsAgreed] = useState(false);
+  const [showPrivacy, setShowPrivacy] = useState(false);
   const [activeFilter, setActiveFilter] = useState('All');
   const [submitStatus, setSubmitStatus] = useState(null); 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -59,7 +56,6 @@ const App = () => {
     contact: useRef(null)
   };
 
-  // Zmiana ikony na zakładce (Favicon)
   useEffect(() => {
     const favicon = document.querySelector("link[rel*='icon']") || document.createElement('link');
     favicon.type = 'image/svg+xml';
@@ -87,7 +83,7 @@ const App = () => {
     if (view !== 'home') window.scrollTo(0, 0);
   }, [selectedProject, isMobileMenuOpen, view]);
 
-const PrivacyContent = () => (
+  const PrivacyContent = () => (
     <div className="space-y-6 text-gray-300 font-light text-sm md:text-base leading-relaxed">
       <h4 className="text-[#B5A995] font-black uppercase tracking-widest text-xs">1. Administrator Danych</h4>
       <p>Administratorem danych osobowych jest Sebastian Kaleta. Kontakt: sebastian.m.kaleta@gmail.com</p>
@@ -100,11 +96,10 @@ const PrivacyContent = () => (
     </div>
   );
 
-  
   const allProjects = [
-    { id: 1, title: "Komercyjna Produkcja AI", category: "AI Art", img: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=1200", fullDesc: "Zastosowanie zaawansowanych modeli generatywnych w kampaniach produktowych.", tools: ["Flux.1 Pro", "Photoshop"], featured: true },
+    { id: 1, title: "Wizualizacja AI", category: "Wizualizacje", img: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=1200", fullDesc: "Zastosowanie zaawansowanych modeli generatywnych w kampaniach produktowych.", tools: ["Flux.1 Pro", "Photoshop"], featured: true },
     { id: 2, title: "System Identyfikacji Wizualnej", category: "Design", img: "https://images.unsplash.com/photo-1633167606207-d840b5070fc2?auto=format&fit=crop&q=80&w=1200", fullDesc: "Kreowanie spójnego języka wizualnego z wykorzystaniem AI.", tools: ["ComfyUI", "Magnific AI"], featured: true },
-    { id: 3, title: "Technologia Kreatywna", category: "AI Art", img: "https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?auto=format&fit=crop&q=80&w=1200", fullDesc: "Eksperymentalne podejście do tworzenia contentu.", tools: ["Leonardo.ai", "Firefly"], featured: true },
+    { id: 3, title: "Technologia Kreatywna", category: "Wizualizacje", img: "https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?auto=format&fit=crop&q=80&w=1200", fullDesc: "Eksperymentalne podejście do tworzenia contentu.", tools: ["Leonardo.ai", "Firefly"], featured: true },
     { id: 4, title: "Meta Ads Campaign", category: "Social Media", img: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&q=80&w=1200", fullDesc: "Optymalizacja kreacji reklamowych dla sektora e-commerce.", tools: ["Photoshop", "Meta Ads"], featured: false },
     { id: 5, title: "AI Product Video", category: "Video", img: "https://images.unsplash.com/photo-1536240478700-b869070f9279?auto=format&fit=crop&q=80&w=1200", fullDesc: "Generowanie wideo produktowego za pomocą Kling 2.5 i Runway Gen-3.", tools: ["Kling 2.5", "Premiere Pro"], featured: false },
     { id: 6, title: "3D Furniture Rendering", category: "Visualizations", img: "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&q=80&w=1200", fullDesc: "Fotorealistyczne wizualizacje 3D produktów meblowych.", tools: ["Blender", "V-Ray"], featured: false },
@@ -134,29 +129,28 @@ const PrivacyContent = () => (
       year: "11.2024 - Obecnie", 
       role: "Grafik & AI Creator", 
       place: "Seart Group Sp. z o.o.", 
-      desc: "Optymalizacja kosztów sesji zdjęciowych poprzez wizualizacje 3D, następnie wdrożenie GenAI i zbudowanie procesów dla fotorealistycznch wizualizacji AI." 
+      desc: "Rozwijając się jako wizualizator, wprowadziłem wewnętrzne wizualizacje 3D, co przyniosło 20% oszczędności i zwiększyło ilość pozyskiwania nowych materiałów, jednocześnie skracając czas realizacji. Wizualizacje nie były już zlecane na zewnątrz. Kolejne lata pozwoliły na usprawnienie procesu wizualizowania. Wprowadzenie technologi AI przyczyniło się do ogromnego skoku jakości, oraz skruceniu czasu pozyskiwania nowych materiałów. Optymalizacja pozwoliła na przyspieszenie  o 150% i obniżenie kosztów o 70% przy zwiększonej jakości materiałów. Opracowanie nowych wizualizacji kolekcji meblowych znacząco wpłyneło na sprzedaż, szzególnie mniej popularnych produktów aż o 50%." 
     },
     { 
       year: "09.2023 - 10.2024", 
       role: "Młodszy specjalista ds. e-commerce", 
       place: "Seart Group Sp. z o.o.", 
-      desc: "Prowadzenie i optymalizacja kampanii Meta Ads. Projektowanie grafik WWW oraz modelowanie 3D produktów." 
+      desc: "Prowadzenie i optymalizacja kampanii Meta Ads. Projektowanie grafik na strony WWW. Wprowadzenie modelowania 3D pozwoliło na wyjście z ofertą dla współpracy z Architektami i Projektantami wnętrz" 
     },
     { 
       year: "10.2019 - obecnie", 
       role: "Graphic Designer", 
       place: "Freelance", 
-      desc: "Dostarczanie kompleksowych rozwiązań graficznych pozwalających firmom skutecznie działać na rynku." 
+      desc: "Współpraca z lokalnymi firmami w zakresie przygotowania grafik na Social Media, strony internetowe oraz projektów do druku - plakaty, etykiety" 
     },
     { 
       year: "03.2016 - 08.2023", 
-      role: "Graphic & CAD ", 
-      place: "Freelance", 
-      desc: "Dostarczanie kompleksowych rozwiązań graficznych pozwalających firmom skutecznie działać na rynku." 
+      role: "Projektant CAD & Operator plazmy ", 
+      place: "P.H.U.P. Dziekan", 
+      desc: "Projektowanie maszyn rolniczych i dokumentacji technicznej. Obróbka zdjęć. Obsługa wykrawarki plazmowej oraz kierowanie zespołem na dziale projektowania i wykrawania plazmowego. Na wczesnym etapie wykrywałem błędy projektowe, dzięki czemu koszta produkcji prototypów zmniejszyły się o 30%. Usprawnienia wprowadzone na dziale oraz wczesne wykrywanie problemów działania maszyn, obniżyły zużycie części wymiennych wykrawarek o 35% co przełożyło się na oszczędności 10% podczas zakupu części wymiennych. " 
     }
   ];
 
-  // OBSŁUGA WYSYŁKI PRZEZ FORMSPREE
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!isAgreed) return;
@@ -203,17 +197,17 @@ const PrivacyContent = () => (
         <div className="relative z-20 max-w-7xl w-full pt-32 md:pt-20">
           <div className="flex items-center gap-6 mb-8 opacity-70">
             <span className="w-12 h-[1px] bg-[#B5A995]"></span>
-            <span className="text-[10px] uppercase tracking-[0.6em] font-black">Visual Intelligence</span>
+            <span className="text-[10px] uppercase tracking-[0.6em] font-black">Działam kreatywnie z AI</span>
           </div>
           <h1 className="text-[12vw] md:text-[5.5vw] leading-[0.95] font-black tracking-tighter uppercase mb-16 mix-blend-lighten">
-            AI DESIGN <br/> <span className="hover:text-[#B5A995] transition-colors duration-500">& wizualizacje.</span> <br/>
+            Kreacje AI <br/> <span className="hover:text-[#B5A995] transition-colors duration-500">& wizualizacje.</span> <br/>
             <span className="font-semibold opacity-90">ESTETYKA NAPĘDZANA</span><br/>
             <span className="text-[#B5A995] font-serif italic normal-case font-light lowercase text-[10vw] md:text-[5vw]">technologią.</span>
           </h1>
           <div className="flex flex-col sm:flex-row gap-6">
             <button onClick={() => sectionRefs.portfolio.current.scrollIntoView({ behavior: 'smooth' })} className="px-10 py-5 bg-[#B5A995] text-black rounded-full flex items-center justify-center gap-4 hover:bg-white transition-all">
               <span className="text-[10px] md:text-[11px] uppercase font-black tracking-[0.2em]">Kariera / CV</span>
-              <IconPalette />
+              <IconFile />
             </button>
           </div>
         </div>
@@ -240,7 +234,7 @@ const PrivacyContent = () => (
                       <h4 className="text-[9px] uppercase tracking-[0.4em] font-black text-[#B5A995]">Podejście</h4>
                     </div>
                     <p className="text-gray-400 text-xs md:text-base font-light leading-relaxed">
-                      Jako <strong>AI Designer</strong>, specjalizuję się w fotorealistycznej produkcji wizualnej. Tworzę materiały, które pozwalają markom skalować ich obecność online.
+                      Jako <strong>AI Creator</strong>, specjalizuję się w fotorealistycznej produkcji wizualnej. Tworzę materiały, które pozwalają markom skalować ich obecność online. Potrzebujesz materiałów promocyjnych wysokiej jakości w ekspresowym tmepie? Świetnie trafiłeś!
                     </p>
                   </div>
                   <div className="space-y-4">
@@ -363,7 +357,7 @@ const PrivacyContent = () => (
       <main className="relative z-10">
         {view === 'home' ? <HomeView /> : <PortfolioView />}
         
-        {/* SEKCOJA KONTAKT - ZMODYFIKOWANA POD FORMSPREE */}
+        {/* SEKCJA KONTAKT */}
         <section ref={sectionRefs.contact} className="py-20 md:py-32 px-6 md:px-12 lg:px-24 border-t border-white/5 bg-[#0D0D0D]">
           <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-20">
             <div className="flex flex-col justify-between">
@@ -377,7 +371,6 @@ const PrivacyContent = () => (
                 <a href="mailto:sebastian.m.kaleta@gmail.com" className="text-xl md:text-2xl font-light hover:text-[#B5A995] transition-colors border-b border-white/10 pb-2 inline-block mb-8">
                   sebastian.m.kaleta@gmail.com
                 </a>
-                {/* SOCJALE W KONTAKCIE */}
                 <div className="flex flex-wrap gap-4">
                   <a href="https://www.instagram.com/sebastian.aicreator" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 px-6 py-3 border border-white/10 rounded-full hover:bg-[#B5A995] hover:text-black transition-all group">
                     <IconInstagram />
@@ -438,16 +431,16 @@ const PrivacyContent = () => (
                   </div>
 
                   <div className="flex items-center gap-4">
-        <div 
-          className={`w-6 h-6 rounded-lg border flex items-center justify-center cursor-pointer transition-all ${isAgreed ? 'bg-[#B5A995] border-[#B5A995]' : 'border-white/20'}`}
-          onClick={() => setIsAgreed(!isAgreed)}
-        >
-          {isAgreed && <IconCheck />}
-        </div>
-        <p className="text-[10px] text-gray-500 leading-relaxed uppercase tracking-widest font-bold select-none">
-          Akceptuję <button type="button" onClick={() => setShowPrivacy(true)} className="text-[#B5A995] hover:underline underline-offset-4">politykę prywatności</button>
-        </p>
-      </div>
+                    <div 
+                      className={`w-6 h-6 rounded-lg border flex items-center justify-center cursor-pointer transition-all ${isAgreed ? 'bg-[#B5A995] border-[#B5A995]' : 'border-white/20'}`}
+                      onClick={() => setIsAgreed(!isAgreed)}
+                    >
+                      {isAgreed && <IconCheck />}
+                    </div>
+                    <p className="text-[10px] text-gray-500 leading-relaxed uppercase tracking-widest font-bold select-none">
+                      Akceptuję <button type="button" onClick={() => setShowPrivacy(true)} className="text-[#B5A995] hover:underline underline-offset-4">politykę prywatności</button>
+                    </p>
+                  </div>
 
                   <button
                     disabled={!isAgreed || isSubmitting}
