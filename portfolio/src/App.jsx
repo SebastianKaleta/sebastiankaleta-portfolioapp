@@ -7,6 +7,7 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
  * 3. Wklej poniżej swój ID (znajdziesz go w zakładce "Settings" na Formspree)
  */
 const FORMSPREE_ID = 'mpqynnjo'; // Zmień to na swój ID z Formspree
+const CV_URL = '/docs/CV_Sebastian_Kaleta.pdf'; 
 
 // Ikony SVG
 const IconPalette = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20.94c1.88 0 3.05-1.4 3.05-3.11 0-.84-.35-1.45-.8-1.97-.3-.33-.35-.42-.35-.87 0-1.1 1-1.94 2.05-1.94 2.1 0 3.05 1.5 3.05 3.11 0 4.66-3.14 7.78-7 7.78s-7-3.12-7-7.78c0-3.17 1.95-8.11 8-11.11 4.03-2 6.96 0 6.96 3 0 1.5-1.5 3-3 3s-3-1.5-3-3V2" /></svg>;
@@ -18,13 +19,19 @@ const IconCheck = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="no
 const IconInstagram = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>;
 const IconLinkedin = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>;
 const IconBehance = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 12c2.1 0 3-1 3-2.5S11.1 7 9 7H5v5h4zM9 18c2.4 0 3.5-1.2 3.5-3s-1.1-3-3.5-3H5v6h4zM15 10h5v1h-5zM15 12c0 2.5 5 2.5 5 0"></path></svg>;
+const IconMenu = () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>;
+
 
 const ProjectCard = ({ project, onClick }) => (
   <div className="group cursor-pointer" onClick={onClick}>
     <div className="aspect-[3/4] overflow-hidden rounded-[24px] md:rounded-[40px] border border-white/5 bg-[#141414] relative shadow-xl transition-all duration-700">
-      <img src={project.img} alt={project.title} className="w-full h-full object-cover grayscale opacity-40 md:opacity-30 group-hover:opacity-100 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" />
+      <img 
+        src={project.images[0]} 
+        alt={project.title} 
+        className="w-full h-full object-cover grayscale opacity-40 md:opacity-30 group-hover:opacity-100 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" 
+      />
       <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-sm hidden md:flex">
-         <span className="px-8 py-3 bg-white text-black rounded-full text-[10px] uppercase tracking-widest font-black">Szczegóły</span>
+         <span className="px-8 py-3 bg-white text-black rounded-full text-[10px] uppercase tracking-widest font-black">Szczegóły projektu</span>
       </div>
     </div>
     <div className="mt-6 md:mt-8 group-hover:translate-x-3 transition-transform duration-500">
@@ -47,6 +54,7 @@ const App = () => {
   const [activeFilter, setActiveFilter] = useState('All');
   const [submitStatus, setSubmitStatus] = useState(null); 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const sectionRefs = {
     hero: useRef(null),
@@ -96,14 +104,73 @@ const App = () => {
     </div>
   );
 
-  const allProjects = [
-    { id: 1, title: "Wizualizacja AI", category: "Wizualizacje", img: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=1200", fullDesc: "Zastosowanie zaawansowanych modeli generatywnych w kampaniach produktowych.", tools: ["Flux.1 Pro", "Photoshop"], featured: true },
-    { id: 2, title: "System Identyfikacji Wizualnej", category: "Design", img: "https://images.unsplash.com/photo-1633167606207-d840b5070fc2?auto=format&fit=crop&q=80&w=1200", fullDesc: "Kreowanie spójnego języka wizualnego z wykorzystaniem AI.", tools: ["ComfyUI", "Magnific AI"], featured: true },
-    { id: 3, title: "Technologia Kreatywna", category: "Wizualizacje", img: "https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?auto=format&fit=crop&q=80&w=1200", fullDesc: "Eksperymentalne podejście do tworzenia contentu.", tools: ["Leonardo.ai", "Firefly"], featured: true },
-    { id: 4, title: "Meta Ads Campaign", category: "Social Media", img: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&q=80&w=1200", fullDesc: "Optymalizacja kreacji reklamowych dla sektora e-commerce.", tools: ["Photoshop", "Meta Ads"], featured: false },
-    { id: 5, title: "AI Product Video", category: "Video", img: "https://images.unsplash.com/photo-1536240478700-b869070f9279?auto=format&fit=crop&q=80&w=1200", fullDesc: "Generowanie wideo produktowego za pomocą Kling 2.5 i Runway Gen-3.", tools: ["Kling 2.5", "Premiere Pro"], featured: false },
-    { id: 6, title: "3D Furniture Rendering", category: "Visualizations", img: "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&q=80&w=1200", fullDesc: "Fotorealistyczne wizualizacje 3D produktów meblowych.", tools: ["Blender", "V-Ray"], featured: false },
-  ];
+ // DANE PROJEKTÓW Z TABLICĄ ZDJĘĆ
+ const allProjects = [
+  { 
+    id: 1, 
+    title: "Komercyjna Produkcja AI", 
+    category: "AI Art", 
+    images: [
+      "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=1200",
+      "https://images.unsplash.com/photo-1633167606207-d840b5070fc2?auto=format&fit=crop&q=80&w=1200",
+      "https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?auto=format&fit=crop&q=80&w=1200"
+    ], 
+    fullDesc: "Zastosowanie zaawansowanych modeli generatywnych w kampaniach produktowych. Projekt obejmował stworzenie serii fotorealistycznych obrazów produktów w abstrakcyjnych środowiskach.", 
+    tools: ["Flux.1 Pro", "Photoshop", "Magnific AI"], 
+    featured: true 
+  },
+  { 
+    id: 2, 
+    title: "System Identyfikacji Wizualnej", 
+    category: "Design", 
+    images: [
+      "https://images.unsplash.com/photo-1633167606207-d840b5070fc2?auto=format&fit=crop&q=80&w=1200",
+      "https://images.unsplash.com/photo-1586717791821-3f44a563eb4c?auto=format&fit=crop&q=80&w=1200",
+      "https://images.unsplash.com/photo-1586717791821-3f44a563eb4c?auto=format&fit=crop&q=80&w=1200"
+    ], 
+    fullDesc: "Kreowanie spójnego języka wizualnego z wykorzystaniem AI dla nowoczesnego startupu technologicznego.", 
+    tools: ["ComfyUI", "Adobe Illustrator"], 
+    featured: true 
+  },
+  { 
+    id: 3, 
+    title: "Technologia Kreatywna", 
+    category: "AI Art", 
+    images: [
+      "https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?auto=format&fit=crop&q=80&w=1200"
+    ], 
+    fullDesc: "Eksperymentalne podejście do tworzenia contentu, łączące generowanie proceduralne z modelami dyfuzyjnymi.", 
+    tools: ["Leonardo.ai", "Firefly"], 
+    featured: true 
+  },
+  { 
+      id: 4, 
+      title: "Meta Ads Campaign", 
+      category: "Social Media", 
+      images: ["https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&q=80&w=1200"], 
+      fullDesc: "Optymalizacja kreacji reklamowych dla sektora e-commerce.", 
+      tools: ["Photoshop", "Meta Ads"], 
+      featured: false 
+  },
+  { 
+      id: 5, 
+      title: "AI Product Video", 
+      category: "Video", 
+      images: ["https://images.unsplash.com/photo-1536240478700-b869070f9279?auto=format&fit=crop&q=80&w=1200"], 
+      fullDesc: "Generowanie wideo produktowego za pomocą Kling 2.5 i Runway Gen-3.", 
+      tools: ["Kling 2.5", "Premiere Pro"], 
+      featured: false 
+  },
+  { 
+      id: 6, 
+      title: "3D Furniture Rendering", 
+      category: "Visualizations", 
+      images: ["https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&q=80&w=1200"], 
+      fullDesc: "Fotorealistyczne wizualizacje 3D produktów meblowych.", 
+      tools: ["Blender", "V-Ray"], 
+      featured: false 
+  },
+];
 
   const featuredProjects = allProjects.filter(p => p.featured);
   
@@ -290,7 +357,9 @@ const App = () => {
           <div className="max-w-7xl mx-auto">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 md:mb-20 gap-8">
               <h2 className="text-4xl md:text-7xl font-black uppercase tracking-tighter">Doświadczenie <br /> <span className="text-[#B5A995] font-serif italic lowercase">rynkowe.</span></h2>
-              <button className="px-8 py-4 bg-white text-black rounded-full text-[10px] uppercase font-black tracking-widest flex items-center justify-center gap-3">Pobierz CV <IconFile /></button>
+              <a href={CV_URL} download className="px-8 py-4 bg-white text-black rounded-full text-[10px] uppercase font-black tracking-widest flex items-center justify-center gap-3 hover:bg-[#B5A995] transition-all">
+                Pobierz CV <IconFile />
+              </a>
             </div>
             <div className="space-y-4 md:space-y-2 mb-20">
               {cvData.map((item, i) => (
@@ -342,17 +411,34 @@ const App = () => {
       </div>
 
       <nav className="fixed top-0 left-0 w-full p-6 md:px-12 md:py-10 flex justify-between items-center z-[100] mix-blend-difference">
-        <div className="flex flex-col group cursor-pointer" onClick={() => scrollTo('hero')}>
+        <div className="flex flex-col group cursor-pointer" onClick={() => {setView('home'); window.scrollTo(0,0); setMenuOpen(false);}}>
           <span className="text-xl md:text-2xl font-black tracking-tighter uppercase leading-none group-hover:text-[#B5A995] transition-colors">Sebastian</span>
           <span className="text-[9px] md:text-[10px] tracking-[0.4em] uppercase opacity-60 font-bold">AI Creator</span>
         </div>
-        <div className="hidden md:flex gap-10 lg:gap-16 items-center text-[12px] tracking-[0.25em] uppercase font-black">
+        
+        {/* Mobile Toggle */}
+        <button onClick={() => setMenuOpen(!menuOpen)} className="md:hidden p-2 text-white">
+          {menuOpen ? <IconX /> : <IconMenu />}
+        </button>
+
+        {/* Desktop Menu */}
+        <div className="hidden md:flex gap-10 lg:gap-16 items-center text-[11px] tracking-[0.25em] uppercase font-black">
           <button onClick={() => scrollTo('about')} className="hover:text-[#B5A995] transition-all">O mnie</button>
           <button onClick={() => setView('portfolio')} className="hover:text-[#B5A995] transition-all">Portfolio</button>
           <button onClick={() => scrollTo('experience')} className="hover:text-[#B5A995] transition-all">Kariera</button>
           <button onClick={() => scrollTo('contact')} className="bg-white text-black px-8 py-3.5 rounded-full hover:bg-[#B5A995] transition-all">Kontakt</button>
         </div>
+
+        {/* Mobile Menu Overlay */}
+        <div className={`fixed inset-0 bg-black z-[200] flex flex-col items-center justify-center gap-8 transition-all duration-500 md:hidden ${menuOpen ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'}`}>
+           <button onClick={() => setMenuOpen(false)} className="absolute top-8 right-8"><IconX /></button>
+           <button onClick={() => scrollTo('about')} className="text-3xl font-black uppercase tracking-tighter">O mnie</button>
+           <button onClick={() => {setView('portfolio'); setMenuOpen(false);}} className="text-3xl font-black uppercase tracking-tighter">Portfolio</button>
+           <button onClick={() => scrollTo('experience')} className="text-3xl font-black uppercase tracking-tighter">Kariera</button>
+           <button onClick={() => scrollTo('contact')} className="text-3xl font-black uppercase tracking-tighter text-[#B5A995]">Kontakt</button>
+        </div>
       </nav>
+      {/* --------------koniec zmian------------- */}
 
       <main className="relative z-10">
         {view === 'home' ? <HomeView /> : <PortfolioView />}
@@ -477,27 +563,61 @@ const App = () => {
         </div>
       )}
 
-      {/* MODAL PROJEKTU */}
+      {/* MODAL ZE SZCZEGÓŁAMI PROJEKTU I GALERIĄ ZDJĘĆ */}
       {selectedProject && (
-        <div className="fixed inset-0 z-[200] flex items-center justify-center p-4" onClick={() => setSelectedProject(null)}>
-          <div className="absolute inset-0 bg-black/95 backdrop-blur-xl"></div>
-          <div className="relative w-full max-w-6xl max-h-[90vh] bg-[#111] border border-white/10 rounded-[30px] overflow-hidden flex flex-col lg:flex-row shadow-3xl" onClick={(e) => e.stopPropagation()}>
-            <button className="absolute top-6 right-6 z-[210] p-3 bg-white/10 rounded-full text-white" onClick={() => setSelectedProject(null)}><IconX /></button>
-            <div className="lg:w-3/5 h-[40vh] lg:h-auto overflow-hidden">
-              <img src={selectedProject.img} alt={selectedProject.title} className="w-full h-full object-cover" />
-            </div>
-            <div className="lg:w-2/5 p-8 md:p-12 overflow-y-auto">
-              <span className="text-[10px] text-[#B5A995] uppercase tracking-[0.4em] font-black mb-4 block">{selectedProject.category}</span>
-              <h3 className="text-3xl md:text-5xl font-serif italic mb-6 leading-tight">{selectedProject.title}</h3>
-              <p className="text-gray-400 leading-relaxed font-light mb-8">{selectedProject.fullDesc}</p>
-              <div className="flex flex-wrap gap-2 mb-10">
-                {selectedProject.tools.map((tool, t) => (
-                  <span key={t} className="px-4 py-2 bg-white/5 border border-white/10 rounded-full text-[9px] uppercase tracking-widest font-bold">{tool}</span>
+        <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 md:p-8" onClick={() => setSelectedProject(null)}>
+          <div className="absolute inset-0 bg-black/95 backdrop-blur-2xl"></div>
+          {/* --------------początek zmian---------- */}
+          <div className="relative w-full max-w-7xl h-[90vh] bg-[#111] border border-white/10 rounded-[32px] md:rounded-[48px] overflow-hidden flex flex-col lg:flex-row shadow-3xl animate-in fade-in zoom-in duration-300" onClick={(e) => e.stopPropagation()}>
+            <button className="absolute top-6 right-6 z-[210] p-3 bg-black/40 backdrop-blur-md rounded-full text-white hover:bg-[#B5A995] hover:text-black transition-all" onClick={() => setSelectedProject(null)}><IconX /></button>
+            
+            {/* Lewa strona: Galeria zdjęć (właściwe przewijanie) */}
+            <div className="lg:w-3/5 h-1/2 lg:h-full overflow-y-auto bg-black scrollbar-hide flex flex-col">
+              <div className="flex flex-col">
+                {selectedProject.images.map((imgUrl, index) => (
+                  <div key={index} className="w-full flex-shrink-0">
+                    <img 
+                      src={imgUrl} 
+                      alt={`${selectedProject.title} view ${index + 1}`} 
+                      className="w-full h-auto object-cover block"
+                    />
+                  </div>
                 ))}
               </div>
-              <button onClick={() => setSelectedProject(null)} className="w-full py-5 bg-[#B5A995] text-black rounded-full text-[10px] font-black tracking-widest">Zamknij</button>
+            </div>
+
+            {/* Prawa strona: Informacje */}
+            <div className="lg:w-2/5 h-1/2 lg:h-full p-8 md:p-14 overflow-y-auto bg-[#111] text-left">
+              <div className="flex items-center gap-4 mb-6">
+                <span className="w-8 h-[1px] bg-[#B5A995]"></span>
+                <span className="text-[10px] text-[#B5A995] uppercase tracking-[0.4em] font-black">{selectedProject.category}</span>
+              </div>
+              <h3 className="text-4xl md:text-6xl font-serif italic mb-8 leading-tight text-left">{selectedProject.title}</h3>
+              <p className="text-gray-400 leading-relaxed font-light mb-10 text-sm md:text-base border-l-2 border-white/5 pl-6 text-left">{selectedProject.fullDesc}</p>
+              
+              <div className="mb-12">
+                <h4 className="text-[9px] uppercase tracking-[0.4em] font-black text-white/30 mb-4">Narzędzia i Stack</h4>
+                <div className="flex flex-wrap gap-2">
+                    {selectedProject.tools.map((tool, t) => (
+                    <span key={t} className="px-4 py-2 bg-white/5 border border-white/10 rounded-full text-[9px] uppercase tracking-widest font-bold">{tool}</span>
+                    ))}
+                </div>
+              </div>
+
+              {/* Naprawiony przycisk powrotu */}
+              <button 
+                type="button"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setSelectedProject(null);
+                }} 
+                className="w-full py-5 border border-white/10 hover:border-[#B5A995] hover:text-[#B5A995] rounded-full text-[10px] font-black tracking-widest transition-all"
+              >
+                Wróć do przeglądania
+              </button>
             </div>
           </div>
+          {/* --------------koniec zmian------------- */}
         </div>
       )}
 
